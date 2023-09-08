@@ -1,0 +1,15 @@
+
+        <html>
+        <head>
+            <script>
+            var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+            if(isMobile) {
+                window.location = "https://cdn.tesouro.gov.br/sistemas-internos/apex/producao/sistemas/thot/arquivos/publicacoes/47750_2261157/anexos/21019_681022/Anexo_RMD_Julho_23.zip?v=8292:inline";
+            }
+        </script>
+        </head>
+        <frameset COLS="*" border=0>
+            <frame SRC="https://cdn.tesouro.gov.br/sistemas-internos/apex/producao/sistemas/thot/arquivos/publicacoes/47750_2261157/anexos/21019_681022/Anexo_RMD_Julho_23.zip?v=8292:inline" frameborder=0>
+        </frameset>
+        </html>
+        
