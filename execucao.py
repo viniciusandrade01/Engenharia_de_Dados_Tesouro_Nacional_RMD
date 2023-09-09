@@ -29,9 +29,9 @@ def main():
             #dataref, nome_zip, link_zip = webPageDataScrapers.extractInfoUrl(soup)
             #logging.info(f"EXTRAINDO CONTEÚDO DESEJADO REFERENTE AO RELATÓRIO.")
 
-            webPageDataScrapers.extractZip(html, nome_zip)
+            #webPageDataScrapers.extractZip(html, nome_zip)
             #df = transformData.extractContent(soup, jsonData['source']['generalLink'], "GERAL")
-            logging.info(f"DADOS DAS MOEDAS, COM BOM RANKING, COLETADOS COM SUCESSO.")
+            #logging.info(f"DADOS DAS MOEDAS, COM BOM RANKING, COLETADOS COM SUCESSO.")
         else:
             nameDirectory = f"Moedas_Selecionadas_{generalTools.hyphenToNull(generalTools.splitByEmptySpace(data)[0])}"
             for index, coin in enumerate(jsonData['coins']):
