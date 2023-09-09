@@ -1,3 +1,4 @@
+import datetime
 import time
 import pandas as pd
 import utils.logger_config as logger_config
@@ -16,5 +17,14 @@ class TransformData:
         self.aboutCoin = []
         self.padrao = []
 
-    def extractContent(self, html, tags: dict, coin: str):
-        return 'oi'
+    def selectingData(self, df: pd.DataFrame, title: str, data: list):
+        return df[df[title].isin(data)]
+
+    def deletingColumns(self, df: pd.DataFrame, diames: str):
+        arg = str(datetime.datetime.strptime(diames, "%B de %Y").strftime("%b/%y")).title()
+        count = 2
+        for f in range(0, len(df.columns)):
+            if arg != df.iloc[0][-2]:
+                df = df.drop(columns=df.columns[len(df.columns)-count:])
+            elif arg == df.iloc[0][-2]:
+                return df

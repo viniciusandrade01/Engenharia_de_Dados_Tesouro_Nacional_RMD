@@ -23,9 +23,18 @@ def main():
         if len(jsonData['source']['generalLink']['params']['year']) == 4:
             nameDirectory = f"RMD_{generalTools.hyphenToNull(generalTools.splitByEmptySpace(data)[0])}"
             
-            html, soup, dataref, nome_zip, link_zip = webPageDataScrapers.requestGetDefault(jsonData['source'], nameDirectory)
+            html, soup, dataref, nome_zip, link_zip, xlsx = webPageDataScrapers.requestGetDefault(jsonData['source'], nameDirectory)
             logging.info(f"SALVANDO ARQUIVO XLSX, DO ZIP, REFERENTE AOS RELATÓRIOS MENSAIS DE DÍVIDA.")
 
+            df = fileSavers.openingSheets(f"{nameDirectory}/{xlsx}", '2.2', 6, 6)
+
+            df = transformData.deletingColumns(df, dataref)
+
+            df = transformData.selectingData(df, 'Título', jsonData['source']['generalLink']['rmd22'])
+            
+            fileSavers.creatingFinalDataFrame(df, dataref, 'ronaldinho.csv', '\t', nameDirectory)
+            
+            _=1
             #dataref, nome_zip, link_zip = webPageDataScrapers.extractInfoUrl(soup)
             #logging.info(f"EXTRAINDO CONTEÚDO DESEJADO REFERENTE AO RELATÓRIO.")
 

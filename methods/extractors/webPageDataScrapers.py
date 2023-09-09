@@ -60,4 +60,4 @@ class WebPageDataScrapers:
         except Exception as err:
             logging.error(f"Erro Desconhecido: {err}")
         
-        return html, soup, dataref, nome_zip, link_zip
+        return html, soup, dataref, nome_zip, link_zip, self.xlsx[0]
