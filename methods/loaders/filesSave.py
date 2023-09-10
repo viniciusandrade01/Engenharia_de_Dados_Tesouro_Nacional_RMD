@@ -2,11 +2,14 @@
 import datetime
 import os
 import time
+import numpy as np
 import pandas as pd
 import utils.logger_config as logger_config
 from utils.tools import GeneralTools
+from methods.transformers.transformData import TransformData
 import logging
 generalTools = GeneralTools()
+transformData = TransformData()
 logger_config.setup_logger(time.strftime("%Y-%m-%d %H:%M:%S"))
 
 class FileSavers:
@@ -35,19 +38,21 @@ class FileSavers:
         except Exception as e:
             logging.error(f"ERRO: {e}, NÃO FOI POSSÍVEL SALVAR O DATAFRAME.")
 
-    def creatingFinalDataFrame(self, df: pd.DataFrame, data: str, fileName, sep, nameDirectory):
+    def creatingFinalDataFrame(self, df: pd.DataFrame, data: str, fileName, sep, nameDirectory, data_cap: str):
         novo_df = pd.DataFrame()
         novo_df['SERIE'] = df['Código ISIN'].map(lambda x: str(x).replace("nan","").lstrip())
-        novo_df['ADOLETINHA'] = df.iloc[:,0].map(lambda x: "'" + x + "'")
-        novo_df['ADOLETINHB'] = df['Data de Vencimento'][:].apply(lambda x: self.format_Date(x))
-        novo_df['DATACAP'] = str(datetime.datetime.strptime(data, "%B de %Y").strftime("%Y-%m-%d"))
-        novo_df['ADOLETINHC'] = df.iloc[:,-1].map(lambda x: str(x).replace("0","") if len(str(x)) == 1 else str(x).replace("nan", ""))
-        novo_df['ADOLETINHD'] = df.iloc[:,-2].map(lambda x: str(x).replace("0","") if len(str(x)) == 1 else str(x).replace("nan", ""))
-        novo_df['ADOLETINHK'] = df['Código ISIN'][:].map(lambda x: "'" + str(x) + "'")
+        novo_df['TITULO'] = df.iloc[:,0].map(lambda x: f"'{x}'")
+        novo_df['DATA_VENCIMENTO'] = df['Data de Vencimento'][:].apply(lambda x: transformData.format_Date(x))
+        novo_df['DATA_REF'] = str(datetime.datetime.strptime(data, "%B de %Y").strftime("%Y-%m-%d"))
+        novo_df['DATA_CAPTURA'] = data_cap
+        novo_df['FINANCEIRO (R$ BI)'] = df.iloc[:,-1].map(lambda x: generalTools.zeroToEmpty(str(x)) if len(str(x)) == 1 else generalTools.nanToEmpty(str(x)))
+        novo_df['QUANTIDADE (MIL)'] = df.iloc[:,-2].map(lambda x: generalTools.zeroToEmpty(str(x)) if len(str(x)) == 1 else generalTools.nanToEmpty(str(x)))
+        novo_df['COD_REF'] = novo_df['SERIE'].apply(lambda x: f"'{x}'")
 
-        novo_df = novo_df[novo_df['ADOLETINHD'] != '']
+        novo_df = novo_df[(novo_df['QUANTIDADE (MIL)'] != '') & (novo_df['FINANCEIRO (R$ BI)'] != '')]
+
         return novo_df.to_csv(os.path.join(nameDirectory, fileName), sep=f"{sep}", 
-                              columns=['SERIE', 'DATASER', 'ADOLETINHA', 'ADOLETINHB', 'ADOLETINHC', 'ADOLETINHD', 'ADOLETINHK'], 
+                              columns=['SERIE', 'TITULO', 'DATA_VENCIMENTO', 'DATA_REF', 'DATA_CAPTURA', 'FINANCEIRO (R$ BI)', 'QUANTIDADE (MIL)', 'COD_REF'], 
                               index=False)
 
     def concatDataFrame(self, df: pd.DataFrame, dictionary: dict, index: int):

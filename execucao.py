@@ -32,37 +32,10 @@ def main():
 
             df = transformData.selectingData(df, 'Título', jsonData['source']['generalLink']['rmd22'])
             
-            fileSavers.creatingFinalDataFrame(df, dataref, 'ronaldinho.csv', '\t', nameDirectory)
-            
-            _=1
-            #dataref, nome_zip, link_zip = webPageDataScrapers.extractInfoUrl(soup)
-            #logging.info(f"EXTRAINDO CONTEÚDO DESEJADO REFERENTE AO RELATÓRIO.")
-
-            #webPageDataScrapers.extractZip(html, nome_zip)
-            #df = transformData.extractContent(soup, jsonData['source']['generalLink'], "GERAL")
-            #logging.info(f"DADOS DAS MOEDAS, COM BOM RANKING, COLETADOS COM SUCESSO.")
+            fileSavers.creatingFinalDataFrame(df, dataref, f'R_Mensal_Divida_{generalTools.hyphenToNull(generalTools.splitByEmptySpace(data)[0])}.csv', '\t', nameDirectory, generalTools.splitByEmptySpace(data)[0])
+            logging.info(f"DATAFRAME CRIADO COM SUCESSO!")
         else:
-            nameDirectory = f"Moedas_Selecionadas_{generalTools.hyphenToNull(generalTools.splitByEmptySpace(data)[0])}"
-            for index, coin in enumerate(jsonData['coins']):
-                logging.info(f"ACESSANDO LINK REFERENTE A MOEDA {generalTools.upperCase(coin)}.")
-                
-                html, soup = webPageDataScrapers.specificGetRequest(f"{jsonData['source']['specificLink']['fonte']}{coin}")
-                logging.info(f"SALVANDO PÁGINA HTML REFERENTE A MOEDA {generalTools.upperCase(coin)}.")
-            
-                #fileSavers.saveHTML(html, f"html_{generalTools.hyphenToNull(coin)}_{generalTools.hyphenToNull(generalTools.splitByEmptySpace(data)[0])}.txt", nameDirectory)
-            
-                logging.info(f"EXTRAINDO CONTEÚDO DESEJADO REFERENTE A MOEDA {generalTools.upperCase(coin)}.")
-                
-                aboutCoin = transformData.extractContent(soup, jsonData['source']['specificLink']['atributos'], coin)
-            
-                logging.info(f"DADOS DA MOEDA: {generalTools.upperCase(coin)} COLETADOS COM SUCESSO.")
-
-                logging.info(f"SALVANDO INFORMAÇÕES REFERENTE A MOEDA {generalTools.upperCase(coin)}.")
-                dictionary = fileSavers.saveDictionary(coin, aboutCoin, data)
-                df = fileSavers.concatDataFrame(df, dictionary, index)
-
-        file_name = f"Cotação_Moedas_{generalTools.hyphenToNull(generalTools.splitByEmptySpace(data)[0])}" if len(jsonData['coins']) == 0 else f"Cotação_Moedas_Selecionadas_{generalTools.hyphenToNull(generalTools.splitByEmptySpace(data)[0])}"
-        fileSavers.saveDataFrame(df, file_name, '\t', nameDirectory)
+            print('OK')
     except FileNotFoundError as err:
         logging.error(f"ERRO: {generalTools.upperCase(err)}, O ARQUIVO JSON (data.json) NÃO FOI ENCONTRADO.")
     except (rq.exceptions.HTTPError, rq.exceptions.RequestException) as err:

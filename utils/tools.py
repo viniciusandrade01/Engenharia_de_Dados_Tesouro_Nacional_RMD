@@ -40,6 +40,12 @@ class GeneralTools:
     
     def percentageToEmpty(self, dado: str):
         return dado.replace("%","")
+
+    def zeroToEmpty(self, dado: str):
+        return dado.replace("0","")
+    
+    def nanToEmpty(self, dado: str):
+        return dado.replace("nan", "")
     
     def removeParentheses(self, dado: str):
         return dado.replace("(","").replace(")","")
