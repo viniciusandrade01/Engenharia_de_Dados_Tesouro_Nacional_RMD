@@ -1,0 +1,26 @@
+{
+    "source": {
+        "generalLink": {
+            "url":"https://www.tesourotransparente.gov.br/publicacoes/relatorio-mensal-da-divida-rmd/",
+            "params": {
+                "year": "2023",          
+                "month": "06"
+            },
+            "filetype":"csv",
+            "rmd22": ["LTN", "NTN-F", "LFT", "NTN-B", "NTN-B Principal", "NTN-C"],
+            "rmd28": "",
+            "rmd51": ""
+        }
+    },
+    "database": {
+        "host": "seu_host",
+        "username": "seu_usuario",
+        "password": "sua_senha",
+        "database_name": "nome_do_banco"
+    },
+    "aws_account": {
+        "access_key": "sua_access_key",
+        "secret_key": "sua_secret_key",
+        "region": "sua_região"
+    }
+}

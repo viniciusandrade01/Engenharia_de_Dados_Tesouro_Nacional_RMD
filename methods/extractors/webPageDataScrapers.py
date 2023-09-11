@@ -1,15 +1,12 @@
 import datetime
-#from io import BytesIO
 import zipfile
 import os
-#from zipfile import ZipFile
 import requests as rq
 from bs4 import BeautifulSoup as bs4
 import time
 import utils.logger_config as logger_config
 import logging
 import locale
-#import io
 from utils.tools import GeneralTools
 
 locale.setlocale(locale.LC_ALL, 'pt_BR.utf8')
