@@ -21,9 +21,10 @@ class WebPageDataScrapers:
         self.xlsx = []
         self.zip = []
 
-    def extractInfoUrl(self, html):
+    def extractInfoUrl(self, html, data_param: dict):
         dataref = str(html.find_all('div', class_='descricao')).split("<p>")[-1].split("</p>")[0].replace(" – "," - ").split(" - ")[-1]
         nome_zip = 'Anexo_RMD_' + datetime.datetime.strptime(dataref, "%B de %Y").strftime("%B_%y").capitalize() +'.zip'
+        data_capt = generalTools.validateDate(datetime.datetime.strptime(dataref, "%B de %Y").strftime("%Y-%m-01"), data_param)
         link_zip = html.find_all("a", {"title": f"{nome_zip}"})[0].get('href')
         return dataref, nome_zip, link_zip
 
@@ -43,12 +44,12 @@ class WebPageDataScrapers:
         with open(nome_zip, 'wb') as file:
             file.write(response.content)
 
-    def requestGetDefault(self, link: dict, namedirectory: str):
+    def requestGetDefault(self, link: dict, namedirectory: str, data_param: dict):
         try:
             html = rq.get(link['generalLink']['url'])
             html.raise_for_status()
             soup = bs4(html.text, 'html.parser')
-            dataref, nome_zip, link_zip = self.extractInfoUrl(soup)
+            dataref, nome_zip, link_zip = self.extractInfoUrl(soup, data_param)
             self.downloadUrl(link_zip, nome_zip, namedirectory)
             self.xlsx.append(nome_zip.split(".")[0] + '.xlsx')
             self.extractZip(nome_zip, namedirectory)

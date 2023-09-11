@@ -1,14 +1,23 @@
+import datetime
 import json
 import os
 import time
 import utils.logger_config as logger_config
-
+import logging
 logger_config.setup_logger(time.strftime("%Y-%m-%d %H:%M:%S"))
 
 class GeneralTools:
     def __init__(self):
         pass
 
+    def validateDate(self, data: str, data_param: dict):
+        try:
+            data_param = f"{data_param['year']}-{data_param['month']}"
+            return data if data_param > data[:-3] else f"{data_param}-01"
+        except ValueError:
+            logging.info ("A estrutura da data_param não é válida. Deve estar no formato '%Y-%m'.")
+
+    
     def makeDirectory(self, directory: str):
         if not os.path.exists(directory):
             os.makedirs(directory)
@@ -52,3 +61,6 @@ class GeneralTools:
     
     def upperCase(self, dado: str):
         return dado.upper()
+    
+    def lowerCase(self, dado: str):
+        return dado.lower()

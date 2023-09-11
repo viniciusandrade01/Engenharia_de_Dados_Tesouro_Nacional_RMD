@@ -20,22 +20,21 @@ def main():
         logger_config.setup_logger(data)
         df = pd.DataFrame()
 
-        if len(jsonData['source']['generalLink']['params']['year']) == 4:
-            nameDirectory = f"RMD_{generalTools.hyphenToNull(generalTools.splitByEmptySpace(data)[0])}"
+        #if len(jsonData['source']['generalLink']['params']['year']) == 4:
+        nameDirectory = f"RMD_{generalTools.hyphenToNull(generalTools.splitByEmptySpace(data)[0])}"
             
-            html, soup, dataref, nome_zip, link_zip, xlsx = webPageDataScrapers.requestGetDefault(jsonData['source'], nameDirectory)
-            logging.info(f"SALVANDO ARQUIVO XLSX, DO ZIP, REFERENTE AOS RELATÓRIOS MENSAIS DE DÍVIDA.")
+        html, soup, dataref, nome_zip, link_zip, xlsx = webPageDataScrapers.requestGetDefault(jsonData['source'], nameDirectory, jsonData['source']['generalLink']['params'])
+        logging.info(f"SALVANDO ARQUIVO XLSX, DO ZIP, REFERENTE AOS RELATÓRIOS MENSAIS DEDÍVIDA.")
 
-            df = fileSavers.openingSheets(f"{nameDirectory}/{xlsx}", '2.2', 6, 6)
+        df = fileSavers.openingSheets(f"{nameDirectory}/{xlsx}", '2.2', 6, 6)
 
-            df = transformData.deletingColumns(df, dataref)
+        df = transformData.deletingColumns(df, dataref)
 
-            df = transformData.selectingData(df, 'Título', jsonData['source']['generalLink']['rmd22'])
+        df = transformData.selectingData(df, 'Título', jsonData['source']['generalLink']['rmd22'])
             
-            fileSavers.creatingFinalDataFrame(df, dataref, f'R_Mensal_Divida_{generalTools.hyphenToNull(generalTools.splitByEmptySpace(data)[0])}.csv', '\t', nameDirectory, generalTools.splitByEmptySpace(data)[0])
-            logging.info(f"DATAFRAME CRIADO COM SUCESSO!")
-        else:
-            print('OK')
+        fileSavers.creatingFinalDataFrame(df, dataref, f'R_Mensal_Divida_{generalTools.hyphenToNull(generalTools.splitByEmptySpace(data)[0])}', '\t', nameDirectory, generalTools.splitByEmptySpace(data)[0], generalTools.lowerCase(jsonData['source']['generalLink']['filetype']))
+        logging.info(f"DOCUMENTO CRIADO COM SUCESSO!")
+        
     except FileNotFoundError as err:
         logging.error(f"ERRO: {generalTools.upperCase(err)}, O ARQUIVO JSON (data.json) NÃO FOI ENCONTRADO.")
     except (rq.exceptions.HTTPError, rq.exceptions.RequestException) as err:
