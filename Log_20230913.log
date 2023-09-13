@@ -1,0 +1,2 @@
+2023-09-13 16:52:27 | ERROR | Erro Desconhecido: cannot access local variable 'client' where it is not associated with a value
+2023-09-13 17:47:43 | INFO | OCORREU UM ERRO AO TENTAR SUBIR OBJETO AO BUCKET: [WinError 123] A sintaxe do nome do arquivo, do nome do diretório ou do rótulo do volume está incorreta: 'https://cdn.tesouro.gov.br/sistemas-internos/apex/producao/sistemas/thot/arquivos/publicacoes/47750_2261157/anexos/21019_681022/Anexo_RMD_Julho_23.zip?v=6687:inline'

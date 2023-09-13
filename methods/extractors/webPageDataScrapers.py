@@ -1,3 +1,4 @@
+import boto3
 import datetime
 import zipfile
 import os
@@ -8,15 +9,19 @@ import utils.logger_config as logger_config
 import logging
 import locale
 from utils.tools import GeneralTools
+from utils.aws import AboutAWS
 
 locale.setlocale(locale.LC_ALL, 'pt_BR.utf8')
 logger_config.setup_logger(time.strftime("%Y-%m-%d %H:%M:%S"))
 generalTools = GeneralTools()
+jsonData = generalTools.openJson()
 
+_=1
 class WebPageDataScrapers:
     def __init__(self):
         self.xlsx = []
         self.zip = []
+        self.client = AboutAWS()
 
     def extractInfoUrl(self, html, data_param: dict):
         dataref = str(html.find_all('div', class_='descricao')).split("<p>")[-1].split("</p>")[0].replace(" – "," - ").split(" - ")[-1]
@@ -39,6 +44,10 @@ class WebPageDataScrapers:
         link_zip_aux = bs4(response.content, 'html.parser').find('frame')['src']
         response = rq.get(link_zip_aux)
         with open(nome_zip, 'wb') as file:
+            client = self.client.createClient('s3')
+            self.client.uploadFile(client, nome_zip, 'engdadostest', 
+                                   nome_zip)
+            _=1
             file.write(response.content)
 
     def requestGetDefault(self, link: dict, namedirectory: str, data_param: dict):
