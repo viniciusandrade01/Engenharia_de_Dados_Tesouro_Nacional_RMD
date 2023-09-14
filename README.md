@@ -3,7 +3,7 @@ O Relatório Mensal da Dívida Pública Federal (RMD) apresenta informações so
 Fonte: Tesouro Nacional Transparente
 
 # Projeto
-Conforme explicado, explanado, e visando a coleta e organização dos dados (que serão coletados via web scraping, oriundos de um arquivo xlsx - compactados em um zip), para concluir essa tarefa, e viabilizar o relatório à equipe de Dados, separei o projeto em algumas etapas, sendo elas:
+Conforme explicado, explanado, e visando a coleta e organização dos dados (que serão coletados via web scraping, oriundos de um arquivo xlsx - compactado em um zip), para concluir essa tarefa, e viabilizar o relatório à equipe de Dados, separei o projeto em algumas etapas, sendo elas:
 
 # 1) Configuração de Acessos
 - Visando uma melhor organização das informações de configurações, inseri as informações necessárias, e de acessos, em um arquivo json, de nome 'data' - localizado dentro da pasta utils -, nesse arquivo há informações pertinentes a fonte extraída, o tipo do arquivo a ser gerado, parâmetros, configurações quanto ao acesso à tabela de banco de dados PostgreSQL usado, credenciais da conta cloud AWS e informações pertinentes as planilhas desejadas, pré-selecionadas pelo usuário;

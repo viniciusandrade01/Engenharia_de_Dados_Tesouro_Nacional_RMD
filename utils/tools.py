@@ -15,7 +15,7 @@ class GeneralTools:
             data_param = f"{data_param['year']}-{data_param['month']}"
             return data if data_param > data[:-3] else f"{data_param}-01"
         except ValueError:
-            logging.info ("A ESTRUTURA DA DATA_PARAM NÃO É VÁLIDA. DEVE SER NO FORMATO '%Y-%m'.")
+            logging.info ("A ESTRUTURA DA DATA_PARAM NÃO É VÁLIDA. DEVE SER NO FORMATO '%Y-%m', EX.: Year = 2023, Month = 06")
     
     def makeDirectory(self, directory: str):
         if not os.path.exists(directory):

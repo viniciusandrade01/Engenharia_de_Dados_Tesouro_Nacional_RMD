@@ -44,11 +44,9 @@ class WebPageDataScrapers:
         link_zip_aux = bs4(response.content, 'html.parser').find('frame')['src']
         response = rq.get(link_zip_aux)
         with open(nome_zip, 'wb') as file:
-            client = self.client.createClient('s3')
-            self.client.uploadFile(client, nome_zip, 'engdadostest', 
-                                   nome_zip)
-            _=1
             file.write(response.content)
+            client = self.client.createClient('s3')
+            self.client.uploadFile(client, nome_zip, 'engdadostest', f"{namedirectory}/{nome_zip}")
 
     def requestGetDefault(self, link: dict, namedirectory: str, data_param: dict):
         try:

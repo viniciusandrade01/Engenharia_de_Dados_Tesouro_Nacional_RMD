@@ -36,43 +36,52 @@ class FileSavers:
         if file_type == 'csv':
             novo_df.to_csv(f"{diretorio}.csv", sep=f"{sep}", 
                            columns=['SERIE', 'TITULO', 'DATA_VENCIMENTO', 'DATA_REF', 'DATA_CAPTURA', 'FINANCEIRO (R$ BI)', 'QUANTIDADE (MIL)', 'COD_REF'], index=False)
-            return f"DataFrame salvo como {fileName} em formato CSV."
+            logging.info(f"DataFrame salvo como {fileName} em formato CSV.") 
+            return fileName, file_type
         
         elif file_type == 'excel':
             novo_df.to_excel(f"{diretorio}.xlsx", index=False)
-            return f"DataFrame salvo como {fileName} em formato Excel."
+            logging.info(f"DataFrame salvo como {fileName} em formato Excel.")
+            return fileName, file_type 
         
         elif file_type == 'json':
             novo_df.to_json(f"{diretorio}.json", orient='records')
-            return f"DataFrame salvo como {fileName} em formato JSON."
+            logging.info(f"DataFrame salvo como {fileName} em formato JSON.")
+            return fileName, file_type
         
         elif file_type == 'parquet':
             novo_df.to_parquet(f"{diretorio}.parquet", index=False)
-            return f"DataFrame salvo como {fileName} em formato Parquet."
+            logging.info(f"DataFrame salvo como {fileName} em formato Parquet.")
+            return fileName, file_type
         
         elif file_type == 'hdf':
             novo_df.to_hdf(f"{diretorio}.h5", key='data')
-            return f"DataFrame salvo como {fileName} em formato HDF5/H5."
+            logging.info(f"DataFrame salvo como {fileName} em formato HDF5/H5.")
+            return fileName, file_type
         
         elif file_type == 'pickle':
             novo_df.to_pickle(f"{diretorio}.pkl")
-            return f"DataFrame salvo como {fileName} em formato Pickle."
+            logging.info(f"DataFrame salvo como {fileName} em formato Pickle.")
+            return fileName, file_type
         
         elif file_type == 'feather':
             novo_df.to_feather(f"{diretorio}.feather")
-            return f"DataFrame salvo como {fileName} em formato Feather."
+            logging.info(f"DataFrame salvo como {fileName} em formato Feather.")
+            return fileName, file_type
         
         elif file_type == 'avro':
             with open(f"{diretorio}.avro", 'wb') as out_avro:
                 fastavro.writer(out_avro, novo_df.to_dict(orient='records'))
-            return f"DataFrame salvo como {fileName} em formato Avro."
+            logging.info(f"DataFrame salvo como {fileName} em formato Avro.")
+            return fileName, file_type
         
         elif file_type == 'html':
             novo_df.to_html(f"{diretorio}.html", index=False)
-            return f"DataFrame salvo como {fileName} em formato HTML."
+            logging.info(f"DataFrame salvo como {fileName} em formato HTML.")
+            return fileName, file_type
 
         else:
-            return "Tipo de arquivo não suportado. Por favor, escolha um formato válido."
+            logging.info("Tipo de arquivo não suportado. Por favor, escolha um formato válido.")
 
     def concatDataFrame(self, df: pd.DataFrame, dictionary: dict, index: int):
         try:

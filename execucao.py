@@ -6,21 +6,22 @@ from methods.transformers.transformData import TransformData
 from methods.extractors.webPageDataScrapers import WebPageDataScrapers
 from utils.tools import GeneralTools
 import utils.logger_config as logger_config
+from utils.aws import AboutAWS
 import logging
 
 def main():
-    fileSavers = FileSavers()
-    transformData = TransformData()
-    webPageDataScrapers = WebPageDataScrapers()
-    generalTools = GeneralTools()
     try:
+        fileSavers = FileSavers()
+        transformData = TransformData()
+        webPageDataScrapers = WebPageDataScrapers()
+        generalTools = GeneralTools()
+        df = pd.DataFrame()
+        client = AboutAWS()
         # Variável contendo informações das moedas a serem coletadas, aws e banco de dados
         jsonData = generalTools.openJson()
         data = time.strftime("%Y-%m-%d %H:%M:%S")
         logger_config.setup_logger(data)
-        df = pd.DataFrame()
 
-        #if len(jsonData['source']['generalLink']['params']['year']) == 4:
         nameDirectory = f"RMD_{generalTools.hyphenToNull(generalTools.splitByEmptySpace(data)[0])}"
             
         html, soup, dataref, nome_zip, link_zip, xlsx = webPageDataScrapers.requestGetDefault(jsonData['source'], nameDirectory, jsonData['source']['generalLink']['params'])
@@ -32,8 +33,11 @@ def main():
 
         df = transformData.selectingData(df, 'Título', jsonData['source']['generalLink']['rmd22'])
             
-        fileSavers.creatingFinalDataFrame(df, dataref, f'R_Mensal_Divida_{generalTools.hyphenToNull(generalTools.splitByEmptySpace(data)[0])}', '\t', nameDirectory, generalTools.splitByEmptySpace(data)[0], generalTools.lowerCase(jsonData['source']['generalLink']['filetype']))
+        fileName, file_type = fileSavers.creatingFinalDataFrame(df, dataref, f'R_Mensal_Divida_{generalTools.hyphenToNull(generalTools.splitByEmptySpace(data)[0])}', '\t', nameDirectory, generalTools.splitByEmptySpace(data)[0], generalTools.lowerCase(jsonData['source']['generalLink']['filetype']))
         logging.info(f"DOCUMENTO CRIADO COM SUCESSO!")
+        s3 = client.createClient('s3')
+        localfile = f"{nameDirectory}/{fileName}.{file_type}"
+        client.uploadFile(s3, localfile, 'engdadostest', localfile)
         
     except FileNotFoundError as err:
         logging.error(f"ERRO: {generalTools.upperCase(err)}, O ARQUIVO JSON (data.json) NÃO FOI ENCONTRADO.")
