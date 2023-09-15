@@ -1,0 +1,30 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v2
+
+      - name: Configurar ambiente virtual
+        run: |
+          python -m venv .venv
+          source .venv/bin/activate
+          pip install --upgrade pip
+
+      - name: Gerar e instalar dependências
+        run: |
+          pip freeze > requirements.txt
+          pip install -r requirements.txt
+          
+      - name: Executar testes
+        run: pytest  # Substitua pelo comando de teste apropriado
+
+      # Adicione mais etapas de implantação ou outras tarefas conforme necessário
