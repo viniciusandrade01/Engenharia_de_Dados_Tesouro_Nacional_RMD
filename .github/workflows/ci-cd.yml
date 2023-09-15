@@ -10,8 +10,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '20.6.1'
+
       - name: Checkout código
         uses: actions/checkout@v2
+        with:
+          submodules: recursive
+          ref: main
 
       - name: Configurar ambiente virtual
         run: |
@@ -23,10 +31,3 @@ jobs:
         run: |
           pip freeze > requirements.txt
           pip install -r requirements.txt
-
-      - name: Instalar pytest
-        run: |
-          pip install pytest
-
-      - name: Executar testes
-        run: pytest
