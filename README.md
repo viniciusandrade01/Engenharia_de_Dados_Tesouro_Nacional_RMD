@@ -2,7 +2,7 @@
 - O Relatório Mensal da Dívida Pública Federal (RMD) apresenta informações sobre emissões, resgates, estoque, composição, programa Tesouro Direto, perfil de vencimentos e custo médio, dentre outras, da Dívida Pública Federal - DPF, nela incluídas as dívidas interna e externa de responsabilidade do Tesouro Nacional em mercado. O documento reúne ainda informações sobre a reserva de liquidez e as garantias honradas pela União.
 Fonte: Tesouro Nacional Transparente
 
-# - OBS.: ESSE PROJETO NÃO É UMA RECOMENDAÇÃO DE INVESTIMENTO, MAS UMA INICIATIVA DE FORNECER ALGUMAS INFORMAÇÕES E DADOS ÚTEIS - E PÚBLICOS - AOS INVESTIDORES.
+- OBS.: ESSE PROJETO NÃO É UMA RECOMENDAÇÃO DE INVESTIMENTO, MAS UMA INICIATIVA DE FORNECER ALGUMAS INFORMAÇÕES E DADOS ÚTEIS - E PÚBLICOS - AOS INVESTIDORES.
 
 ---------------------------------------------------------------------------------------------
 # PROJETO
