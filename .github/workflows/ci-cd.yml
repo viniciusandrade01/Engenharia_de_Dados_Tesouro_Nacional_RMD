@@ -23,8 +23,10 @@ jobs:
         run: |
           pip freeze > requirements.txt
           pip install -r requirements.txt
-          
-      - name: Executar testes
-        run: pytest  # Substitua pelo comando de teste apropriado
 
-      # Adicione mais etapas de implantação ou outras tarefas conforme necessário
+      - name: Instalar pytest
+        run: |
+          pip install pytest
+
+      - name: Executar testes
+        run: pytest
