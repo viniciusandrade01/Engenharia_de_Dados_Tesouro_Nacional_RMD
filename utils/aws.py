@@ -4,8 +4,10 @@ import time
 import utils.logger_config as logger_config
 import logging
 from utils.tools import GeneralTools
-logger_config.setup_logger(time.strftime("%Y-%m-%d %H:%M:%S"))
+from utils.tools import GeneralTools
 generalTools = GeneralTools()
+logger_config.setup_logger(time.strftime("%Y-%m-%d %H:%M:%S"))
+
 
 class AboutAWS:
     def __init__(self):
@@ -40,5 +42,6 @@ class AboutAWS:
     def uploadFile(self, client, localfile: str, bucketname: str, cloudfile: str):
         try:
             client.upload_file(localfile, bucketname, cloudfile)
+            logging.info(f"OBJETOS INSERIDOS NO BUCKET {str(generalTools.upperCase(e))} COM SUCESSO!")
         except Exception as e:
             logging.info(f"OCORREU UM ERRO AO TENTAR SUBIR OBJETO AO BUCKET: {str(e)}")

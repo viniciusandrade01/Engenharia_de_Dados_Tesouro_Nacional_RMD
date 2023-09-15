@@ -1,10 +1,7 @@
-import datetime
 import json
 import os
 import time
-import utils.logger_config as logger_config
 import logging
-logger_config.setup_logger(time.strftime("%Y-%m-%d %H:%M:%S"))
 
 class GeneralTools:
     def __init__(self):

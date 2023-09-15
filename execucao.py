@@ -19,24 +19,21 @@ def main():
         client = AboutAWS()
         # Variável contendo informações das moedas a serem coletadas, aws e banco de dados
         jsonData = generalTools.openJson()
-        data = time.strftime("%Y-%m-%d %H:%M:%S")
-        logger_config.setup_logger(data)
-
-        nameDirectory = f"RMD_{generalTools.hyphenToNull(generalTools.splitByEmptySpace(data)[0])}"
+        logger_config.setup_logger(time.strftime("%Y-%m-%d %H:%M:%S"))
             
-        html, soup, dataref, nome_zip, link_zip, xlsx = webPageDataScrapers.requestGetDefault(jsonData['source'], nameDirectory, jsonData['source']['generalLink']['params'])
+        html, soup, dataref, nome_zip, link_zip, xlsx, data_capt, name_directory = webPageDataScrapers.requestGetDefault(jsonData['source'], jsonData['source']['generalLink']['params'])
         logging.info(f"SALVANDO ARQUIVO XLSX, DO ZIP, REFERENTE AOS RELATÓRIOS MENSAIS DEDÍVIDA.")
 
-        df = fileSavers.openingSheets(f"{nameDirectory}/{xlsx}", '2.2', 6, 6)
+        df = fileSavers.openingSheets(f"{name_directory}/{xlsx}", '2.2', 6, 6)
 
-        df = transformData.deletingColumns(df, dataref)
+        df = transformData.deletingColumns(df, data_capt)
 
         df = transformData.selectingData(df, 'Título', jsonData['source']['generalLink']['rmd22'])
             
-        fileName, file_type = fileSavers.creatingFinalDataFrame(df, dataref, f'R_Mensal_Divida_{generalTools.hyphenToNull(generalTools.splitByEmptySpace(data)[0])}', '\t', nameDirectory, generalTools.splitByEmptySpace(data)[0], generalTools.lowerCase(jsonData['source']['generalLink']['filetype']))
+        fileName, file_type = fileSavers.creatingFinalDataFrame(df, dataref, f'R_Mensal_Divida_{generalTools.hyphenToNull(data_capt)}', '\t', name_directory, data_capt, generalTools.lowerCase(jsonData['source']['generalLink']['filetype']))
         logging.info(f"DOCUMENTO CRIADO COM SUCESSO!")
         s3 = client.createClient('s3')
-        localfile = f"{nameDirectory}/{fileName}.{file_type}"
+        localfile = f"{name_directory}/{fileName}.{file_type}"
         client.uploadFile(s3, localfile, 'engdadostest', localfile)
         
     except FileNotFoundError as err:

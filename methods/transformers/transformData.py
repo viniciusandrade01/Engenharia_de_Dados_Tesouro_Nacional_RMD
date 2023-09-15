@@ -9,7 +9,7 @@ from methods.extractors.webPageDataScrapers import WebPageDataScrapers
 from sqlalchemy import create_engine
 generalTools = GeneralTools()
 webPageDataScrapers = WebPageDataScrapers()
-data = time.strftime("%Y-%m-%d %H:%M:%S")
+#data = time.strftime("%Y-%m-%d %H:%M:%S")
 logger_config.setup_logger(time.strftime("%Y-%m-%d %H:%M:%S"))
 
 class TransformData:
@@ -56,7 +56,8 @@ class TransformData:
             return ""
 
     def deletingColumns(self, df: pd.DataFrame, diames: str):
-        arg = str(datetime.datetime.strptime(diames, "%B de %Y").strftime("%b/%y")).title()
+        #arg = str(datetime.datetime.strptime(diames, "%B de %Y").strftime("%b/%y")).title()
+        arg = str(datetime.datetime.strptime(diames, "%Y-%m-%d").strftime("%b/%y")).title()
         count = 2
         for f in range(0, len(df.columns)):
             if arg != df.iloc[0][-2]:
