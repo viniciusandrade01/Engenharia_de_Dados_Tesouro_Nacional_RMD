@@ -6,7 +6,7 @@ Fonte: Tesouro Nacional Transparente
 
 ---------------------------------------------------------------------------------------------
 # PROJETO
-- Levando em conta a riqueza de informações que o Tesouro Nacional nos concede (como: monitoramento das finanças públicas, possibilidade de tomadas de decisões de investimento em títulos governamentais, avaliação da saúde financeira do país etc - informações públicas), fiz a extração - usando web scraping - dos títulos públicos mais comuns e populares emitidos pelo Tesouro Nacional no Brasil. A partir desses dados - coletados e organizados, os investidores, de diferentes perfis e objetivos financeiros, poderão usá-los como auxiliadores em tomadas de decisões, escolhendo o título lhe atender melhor. Para conclusão desse projeto - abordando obtenção dos dados, tratamento e armazenamento deles -, foram necessárias algumas etapas, sendo elas:
+- Levando em conta a riqueza de informações que o Tesouro Nacional nos concede (como: monitoramento das finanças públicas, possibilidade de tomadas de decisões de investimento em títulos governamentais, avaliação da saúde financeira do país etc - informações públicas), fiz a extração - usando web scraping - dos títulos públicos mais comuns e populares emitidos pelo Tesouro Nacional no Brasil. A partir desses dados - coletados e organizados, os investidores, de diferentes perfis e objetivos financeiros, poderão usá-los como auxiliadores em tomadas de decisões, escolhendo o título que lhe atender melhor. Para conclusão desse projeto - abordando obtenção dos dados, tratamento e armazenamento deles -, foram necessárias algumas etapas, sendo elas:
 
 ---------------------------------------------------------------------------------------------
 # ETAPAS
@@ -29,8 +29,7 @@ Fonte: Tesouro Nacional Transparente
 # 4) Criei Bucket S3:
 - Usei o Bucket S3 (que serve de 'armazém' para arquivos, conhecidos como objetos) para guardar os objetos gerados com segurança, organização e escalabilidade. Para inserção no S3, fiz uso do Boto3, que é um SDK (Software Development Kit) da AWS para Python, que permite que os desenvolvedores criem aplicativos que interajam com serviços da AWS com facilidade.
 
-# 5) Criei Lambda Function:
-- Para inserção dos objetos coletados/gerados - arquivo zip (contendo o arquivo que usamos como fonte, da fonte, o original), o arquivo gerado (no formato desejado pelo usuário) e o arquivo log (para sinalizar possíveis erros) - no 'armazém', que é o S3, fiz uso da Função Lambda.
+# 5)
 
 # 6) 
 
@@ -57,4 +56,4 @@ Fonte: Tesouro Nacional Transparente
 - https://docs.aws.amazon.com/pt_br/sdk-for-javascript/v2/developer-guide/using-lambda-functions.html
 
 ------------------------------------------------------------------------------------------------
-Obrigado pela interação, fico à disposição e disponível para dicas, bons estudos e fica na paz!
+Obrigado pela interação, fico à disposição e disponível para receber dicas, bons estudos e fica na paz!
