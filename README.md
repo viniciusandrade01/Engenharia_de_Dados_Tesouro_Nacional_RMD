@@ -12,7 +12,7 @@ Fonte: Tesouro Nacional Transparente
 # ETAPAS
 
 # 1) Configuração de Acessos
-- Visando uma melhor organização das informações de configurações, inseri as informações necessárias, e de acessos, em um arquivo json, de nome 'data' - localizado dentro da pasta utils -, nesse arquivo há informações pertinentes a fonte extraída, o tipo do arquivo a ser gerado, parâmetros, configurações quanto ao acesso à tabela de banco de dados PostgreSQL usado, credenciais da conta cloud AWS - usuário IAM, e informações pertinentes as planilhas desejadas, pré-selecionadas pelo usuário;
+- Visando uma melhor organização das informações de configurações, inseri as informações necessárias, e de acessos, em um arquivo json, de nome 'data' - localizado dentro da pasta utils -, nesse arquivo há informações pertinentes a fonte extraída, o tipo do arquivo a ser gerado, parâmetros, credenciais da conta cloud AWS - usuário IAM, e informações pertinentes as planilhas desejadas, pré-selecionadas pelo usuário;
 
 # 2) Criei um processo ETL:
 - E: Extração dos dados respectivos oriundos da fonte https://www.tesourotransparente.gov.br/publicacoes/relatorio-mensal-da-divida-rmd/;
@@ -27,23 +27,19 @@ Fonte: Tesouro Nacional Transparente
 - L: Como a intenção é justamente usar como garantia de integridade, salvei ele na pasta do mês desejado, dentro do Bucket S3 configurado - informado logo após.
 
 # 4) Criei Bucket S3:
-- Usei o Bucket S3 (que serve de 'armazém' para arquivos, conhecidos como objetos) para guardar os objetos gerados com segurança, organização e escalabilidade. Para inserção no S3, fiz uso do Boto3, que é um SDK (Software Development Kit) da AWS para Python, que permite que os desenvolvedores criem aplicativos que interajam com serviços da AWS com facilidade.
-
-# 5)
-
-# 6) 
-
-# 7) 
+- Usei o Bucket S3 (que serve de 'armazém' para arquivos, conhecidos como objetos) para guardar os objetos gerados com segurança, organização e escalabilidade. Para inserção no S3, fiz uso do Boto3, que é um SDK (Software Development Kit) da AWS para Python, permitindo interações facilitadas com serviços AWS.
 
 ---------------------------------------------------------------------------------------------
 # OBSERVAÇÕES:
 - Conforme mencionado, há arquivos ausentes nesse repositório - exemplo do data.json, justamente para manter integridade dos dados pessoais. Dessa forma, para obtenção do resultado esperado, criei um arquivo base (de nome data_exemplo.json, dentro da pasta utils), para vocês terem uma noção da estrutura que foi necessária para obtenção do resultado esperado.
 
-- Passos 2 e 3 foram realizadas usando, prioritariamente, Linguagem de Programação Python e suas principais bibliotecas, sendo algumas delas: pandas, requests, bs4.
+- Passos 2 e 3 foram realizadas usando, prioritariamente e somente, Linguagem de Programação Python e suas principais bibliotecas, sendo algumas delas: pandas, requests, bs4.
 
 - Passo 4 foi realizado manualmente, via console AWS, entretanto, é possível utilizar o boto3 para criação do Bucket via código, informando dados pertinentes ao Usuário e permissões para criação devida.
 
 - Para facilitação e compreensão, diluí o projeto em etapas, entretanto, não, necessariamente, estão organizadas de maneira sequencial, mas que contribuíram para obtenção do resultado esperado.
+
+- Para acessar o Bucket S3 pelo código, fiz uso do recurso IAM, criando um grupo com acesso full ao S3 Bucket, criei um usuário e o inseri dentro do grupo. Dessa forma, depois dessas criações, pude usar as chaves para acessar/inserir os objetos no Bucket.
 
 ------------------------------------------------------------------------------------------------
 # REFERÊNCIAS:
